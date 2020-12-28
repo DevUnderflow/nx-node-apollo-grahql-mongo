@@ -1,3 +1,8 @@
+import dotenv from 'dotenv';
+const env = dotenv.config();
+if (!env) {
+  throw new Error('Env not found!');
+}
 export const environment = {
   __pord__: process.env.NODE_ENV === 'production',
   port: process.env.PORT as unknown as number,

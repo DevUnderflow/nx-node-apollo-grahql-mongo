@@ -8,10 +8,10 @@ import { RedisCache } from 'apollo-server-cache-redis';
 import 'apollo-cache-control';
 /**
  * Configure Apollo Server
- * @param redis 
- * @param Container 
+ * @param redis
+ * @param Container
  */
-export const intializeApolloGraphQl = async ({ redis, Container }) => {
+export const intializeApolloGraphQl = async ({ Container }) => {
   return new ApolloServer({
     schema: await buildSchema({
       resolvers: [UserResolver],
@@ -27,7 +27,6 @@ export const intializeApolloGraphQl = async ({ redis, Container }) => {
     context: ({ req, res }) => ({
       req,
       res,
-      redis
     }),
     formatResponse: (response) => {
       return { ...response };
@@ -44,6 +43,6 @@ export const intializeApolloGraphQl = async ({ redis, Container }) => {
       graphVariant: environment.apollo_graph_variant,
     },
     playground: !environment.__pord__,
-    tracing: !environment.__pord__, 
+    tracing: true,
   });
 }

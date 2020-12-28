@@ -1,5 +1,5 @@
 import { intializeApolloGraphQl } from './apollo.loader';
-import { intializeRedisServer } from './redis.loader';
+// import { intializeRedisServer } from './redis.loader';
 import { intializeMongoose } from './mongoose.loader';
 import dependencyInjectorLoader from './dependencyInjector';
 import { Container } from 'typedi';
@@ -10,8 +10,8 @@ import cookieParser from 'cookie-parser';
 import { environment } from '../../environments/environment';
 
 /**
- * Configure server props 
- * @param app: Express Instance 
+ * Configure server props
+ * @param app: Express Instance
  */
 const intializeServer = async ({app}) => {
 
@@ -31,8 +31,8 @@ const intializeServer = async ({app}) => {
   /**
    * Intialize Redis Server and flush data at start.
    */
-  const redis = await intializeRedisServer();
-  await redis.flushall();
+  // const redis = await intializeRedisServer();
+  // await redis.flushall();
 
   /**
    * Intialize Mongoose Instance.
@@ -50,7 +50,7 @@ const intializeServer = async ({app}) => {
   /**
    * Intialize Apollo GrapQL Server.
    */
-  const apolloServer = await intializeApolloGraphQl({ redis, Container });
+  const apolloServer = await intializeApolloGraphQl({Container });
   apolloServer.applyMiddleware({ app });
 
   /**
