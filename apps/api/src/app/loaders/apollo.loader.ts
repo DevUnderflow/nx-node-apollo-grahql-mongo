@@ -42,6 +42,7 @@ export const intializeApolloGraphQl = async ({ Container }) => {
       key: environment.apollo_key,
       graphVariant: environment.apollo_graph_variant,
     },
+    introspection: true,
     playground: !environment.__pord__,
     tracing: true,
   });
