@@ -11,7 +11,7 @@ import 'apollo-cache-control';
  * @param redis
  * @param Container
  */
-export const intializeApolloGraphQl = async ({ redis, Container }) => {
+export const intializeApolloGraphQl = async ({ Container }) => {
   return new ApolloServer({
     schema: await buildSchema({
       resolvers: [UserResolver],
@@ -27,15 +27,14 @@ export const intializeApolloGraphQl = async ({ redis, Container }) => {
     context: ({ req, res }) => ({
       req,
       res,
-      redis
     }),
     formatResponse: (response) => {
       return { ...response };
     },
-    cache: new RedisCache({
-      port: environment.redis_port,
-      host: environment.redis_host,
-    }),
+    // cache: new RedisCache({
+    //   port: environment.redis_port,
+    //   host: environment.redis_host,
+    // }),
     cacheControl: {
       defaultMaxAge: 5,
     },

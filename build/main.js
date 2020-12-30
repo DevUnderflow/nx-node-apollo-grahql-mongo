@@ -260,11 +260,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../modules */ "./apps/api/src/app/modules/index.ts");
 /* harmony import */ var _middlewares_isAuthenticated__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../middlewares/isAuthenticated */ "./apps/api/src/app/middlewares/isAuthenticated.ts");
 /* harmony import */ var _middlewares_typegoose_middleware__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../middlewares/typegoose.middleware */ "./apps/api/src/app/middlewares/typegoose.middleware.ts");
-/* harmony import */ var apollo_server_cache_redis__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! apollo-server-cache-redis */ "apollo-server-cache-redis");
-/* harmony import */ var apollo_server_cache_redis__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(apollo_server_cache_redis__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var apollo_cache_control__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! apollo-cache-control */ "apollo-cache-control");
-/* harmony import */ var apollo_cache_control__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(apollo_cache_control__WEBPACK_IMPORTED_MODULE_8__);
-
+/* harmony import */ var apollo_cache_control__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! apollo-cache-control */ "apollo-cache-control");
+/* harmony import */ var apollo_cache_control__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(apollo_cache_control__WEBPACK_IMPORTED_MODULE_7__);
 
 
 
@@ -278,7 +275,7 @@ __webpack_require__.r(__webpack_exports__);
  * @param redis
  * @param Container
  */
-const intializeApolloGraphQl = ({ redis, Container }) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(void 0, void 0, void 0, function* () {
+const intializeApolloGraphQl = ({ Container }) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(void 0, void 0, void 0, function* () {
     return new apollo_server_express__WEBPACK_IMPORTED_MODULE_2__["ApolloServer"]({
         schema: yield Object(type_graphql__WEBPACK_IMPORTED_MODULE_3__["buildSchema"])({
             resolvers: [_modules__WEBPACK_IMPORTED_MODULE_4__["UserResolver"]],
@@ -294,15 +291,14 @@ const intializeApolloGraphQl = ({ redis, Container }) => Object(tslib__WEBPACK_I
         context: ({ req, res }) => ({
             req,
             res,
-            redis
         }),
         formatResponse: (response) => {
             return Object.assign({}, response);
         },
-        cache: new apollo_server_cache_redis__WEBPACK_IMPORTED_MODULE_7__["RedisCache"]({
-            port: _environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].redis_port,
-            host: _environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].redis_host,
-        }),
+        // cache: new RedisCache({
+        //   port: environment.redis_port,
+        //   host: environment.redis_host,
+        // }),
         cacheControl: {
             defaultMaxAge: 5,
         },
@@ -763,17 +759,6 @@ module.exports = require("@typegoose/typegoose");
 /***/ (function(module, exports) {
 
 module.exports = require("apollo-cache-control");
-
-/***/ }),
-
-/***/ "apollo-server-cache-redis":
-/*!********************************************!*\
-  !*** external "apollo-server-cache-redis" ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("apollo-server-cache-redis");
 
 /***/ }),
 
