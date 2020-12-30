@@ -51,6 +51,7 @@
     "moment": "^2.23.0",
     "moment-timezone": "^0.5.23",
     "mongoose": "^5.11.7",
+    "newrelic": "^7.0.2",
     "reflect-metadata": "^0.1.12",
     "type-graphql": "^1.1.1",
     "typedi": "^0.8.0",

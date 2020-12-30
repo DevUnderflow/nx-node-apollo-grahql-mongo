@@ -6,5 +6,10 @@
  * redis-commander - https://www.npmjs.com/package/redis-commander
  */
 
+/**
+* Imported `newrelic` for server monitoring.
+*/
+require('newrelic');
+
 import startServer from './app';
 new startServer();
