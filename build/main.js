@@ -260,8 +260,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../modules */ "./apps/api/src/app/modules/index.ts");
 /* harmony import */ var _middlewares_isAuthenticated__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../middlewares/isAuthenticated */ "./apps/api/src/app/middlewares/isAuthenticated.ts");
 /* harmony import */ var _middlewares_typegoose_middleware__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../middlewares/typegoose.middleware */ "./apps/api/src/app/middlewares/typegoose.middleware.ts");
-/* harmony import */ var apollo_cache_control__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! apollo-cache-control */ "apollo-cache-control");
-/* harmony import */ var apollo_cache_control__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(apollo_cache_control__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var apollo_server_cache_redis__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! apollo-server-cache-redis */ "apollo-server-cache-redis");
+/* harmony import */ var apollo_server_cache_redis__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(apollo_server_cache_redis__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var apollo_cache_control__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! apollo-cache-control */ "apollo-cache-control");
+/* harmony import */ var apollo_cache_control__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(apollo_cache_control__WEBPACK_IMPORTED_MODULE_8__);
+
 
 
 
@@ -275,7 +278,7 @@ __webpack_require__.r(__webpack_exports__);
  * @param redis
  * @param Container
  */
-const intializeApolloGraphQl = ({ Container }) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(void 0, void 0, void 0, function* () {
+const intializeApolloGraphQl = ({ redis, Container }) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(void 0, void 0, void 0, function* () {
     return new apollo_server_express__WEBPACK_IMPORTED_MODULE_2__["ApolloServer"]({
         schema: yield Object(type_graphql__WEBPACK_IMPORTED_MODULE_3__["buildSchema"])({
             resolvers: [_modules__WEBPACK_IMPORTED_MODULE_4__["UserResolver"]],
@@ -291,14 +294,15 @@ const intializeApolloGraphQl = ({ Container }) => Object(tslib__WEBPACK_IMPORTED
         context: ({ req, res }) => ({
             req,
             res,
+            redis
         }),
         formatResponse: (response) => {
             return Object.assign({}, response);
         },
-        // cache: new RedisCache({
-        //   port: environment.redis_port,
-        //   host: environment.redis_host,
-        // }),
+        cache: new apollo_server_cache_redis__WEBPACK_IMPORTED_MODULE_7__["RedisCache"]({
+            port: _environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].redis_port,
+            host: _environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].redis_host,
+        }),
         cacheControl: {
             defaultMaxAge: 5,
         },
@@ -355,21 +359,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _apollo_loader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./apollo.loader */ "./apps/api/src/app/loaders/apollo.loader.ts");
-/* harmony import */ var _mongoose_loader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mongoose.loader */ "./apps/api/src/app/loaders/mongoose.loader.ts");
-/* harmony import */ var _dependencyInjector__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dependencyInjector */ "./apps/api/src/app/loaders/dependencyInjector.ts");
-/* harmony import */ var typedi__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! typedi */ "typedi");
-/* harmony import */ var typedi__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(typedi__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! mongoose */ "mongoose");
-/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(mongoose__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _entity__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../entity */ "./apps/api/src/app/entity/index.ts");
-/* harmony import */ var cors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! cors */ "cors");
-/* harmony import */ var cors__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(cors__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var cookie_parser__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! cookie-parser */ "cookie-parser");
-/* harmony import */ var cookie_parser__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(cookie_parser__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../environments/environment */ "./apps/api/src/environments/environment.ts");
+/* harmony import */ var _redis_loader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./redis.loader */ "./apps/api/src/app/loaders/redis.loader.ts");
+/* harmony import */ var _mongoose_loader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./mongoose.loader */ "./apps/api/src/app/loaders/mongoose.loader.ts");
+/* harmony import */ var _dependencyInjector__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./dependencyInjector */ "./apps/api/src/app/loaders/dependencyInjector.ts");
+/* harmony import */ var typedi__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! typedi */ "typedi");
+/* harmony import */ var typedi__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(typedi__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! mongoose */ "mongoose");
+/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(mongoose__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _entity__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../entity */ "./apps/api/src/app/entity/index.ts");
+/* harmony import */ var cors__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! cors */ "cors");
+/* harmony import */ var cors__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(cors__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var cookie_parser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! cookie-parser */ "cookie-parser");
+/* harmony import */ var cookie_parser__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(cookie_parser__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../environments/environment */ "./apps/api/src/environments/environment.ts");
 
 
-// import { intializeRedisServer } from './redis.loader';
+
 
 
 
@@ -386,42 +391,42 @@ const intializeServer = ({ app }) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["
     /**
      * Enable CORS midlleware in production.
      */
-    if (_environments_environment__WEBPACK_IMPORTED_MODULE_9__["environment"].__pord__) {
-        app.use(cors__WEBPACK_IMPORTED_MODULE_7___default()({
+    if (_environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].__pord__) {
+        app.use(cors__WEBPACK_IMPORTED_MODULE_8___default()({
             origin: 'YOUR_CLIENT_URL',
             credentials: true
         }));
     }
     else {
-        app.use(cors__WEBPACK_IMPORTED_MODULE_7___default()());
+        app.use(cors__WEBPACK_IMPORTED_MODULE_8___default()());
     }
-    app.use(cookie_parser__WEBPACK_IMPORTED_MODULE_8___default()());
+    app.use(cookie_parser__WEBPACK_IMPORTED_MODULE_9___default()());
     /**
      * Intialize Redis Server and flush data at start.
      */
-    // const redis = await intializeRedisServer();
-    // await redis.flushall();
+    const redis = yield Object(_redis_loader__WEBPACK_IMPORTED_MODULE_2__["intializeRedisServer"])();
+    yield redis.flushall();
     /**
      * Intialize Mongoose Instance.
      */
-    yield Object(_mongoose_loader__WEBPACK_IMPORTED_MODULE_2__["intializeMongoose"])();
+    yield Object(_mongoose_loader__WEBPACK_IMPORTED_MODULE_3__["intializeMongoose"])();
     /**
      * Intialize Dependency Injection
      */
-    yield Object(_dependencyInjector__WEBPACK_IMPORTED_MODULE_3__["default"])({
-        Container: typedi__WEBPACK_IMPORTED_MODULE_4__["Container"],
-        entities: [_entity__WEBPACK_IMPORTED_MODULE_6__["userModel"]]
+    yield Object(_dependencyInjector__WEBPACK_IMPORTED_MODULE_4__["default"])({
+        Container: typedi__WEBPACK_IMPORTED_MODULE_5__["Container"],
+        entities: [_entity__WEBPACK_IMPORTED_MODULE_7__["userModel"]]
     });
     /**
      * Intialize Apollo GrapQL Server.
      */
-    const apolloServer = yield Object(_apollo_loader__WEBPACK_IMPORTED_MODULE_1__["intializeApolloGraphQl"])({ Container: typedi__WEBPACK_IMPORTED_MODULE_4__["Container"] });
+    const apolloServer = yield Object(_apollo_loader__WEBPACK_IMPORTED_MODULE_1__["intializeApolloGraphQl"])({ redis, Container: typedi__WEBPACK_IMPORTED_MODULE_5__["Container"] });
     apolloServer.applyMiddleware({ app });
     /**
      * Set Mongoose trace to true in production.
      */
-    if (!_environments_environment__WEBPACK_IMPORTED_MODULE_9__["environment"].__pord__) {
-        mongoose__WEBPACK_IMPORTED_MODULE_5___default.a.set('debug', true);
+    if (!_environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].__pord__) {
+        mongoose__WEBPACK_IMPORTED_MODULE_6___default.a.set('debug', true);
     }
 });
 /* harmony default export */ __webpack_exports__["default"] = (intializeServer);
@@ -458,6 +463,31 @@ const intializeMongoose = () => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awa
         throw new Error('Mongoose Error');
     }
 });
+
+
+/***/ }),
+
+/***/ "./apps/api/src/app/loaders/redis.loader.ts":
+/*!**************************************************!*\
+  !*** ./apps/api/src/app/loaders/redis.loader.ts ***!
+  \**************************************************/
+/*! exports provided: intializeRedisServer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "intializeRedisServer", function() { return intializeRedisServer; });
+/* harmony import */ var ioredis__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ioredis */ "ioredis");
+/* harmony import */ var ioredis__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(ioredis__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../environments/environment */ "./apps/api/src/environments/environment.ts");
+
+
+const intializeRedisServer = () => {
+    return new ioredis__WEBPACK_IMPORTED_MODULE_0___default.a({
+        port: _environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].redis_port,
+        host: _environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].redis_host,
+    });
+};
 
 
 /***/ }),
@@ -762,6 +792,17 @@ module.exports = require("apollo-cache-control");
 
 /***/ }),
 
+/***/ "apollo-server-cache-redis":
+/*!********************************************!*\
+  !*** external "apollo-server-cache-redis" ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("apollo-server-cache-redis");
+
+/***/ }),
+
 /***/ "apollo-server-express":
 /*!****************************************!*\
   !*** external "apollo-server-express" ***!
@@ -814,6 +855,17 @@ module.exports = require("cors");
 /***/ (function(module, exports) {
 
 module.exports = require("express");
+
+/***/ }),
+
+/***/ "ioredis":
+/*!**************************!*\
+  !*** external "ioredis" ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("ioredis");
 
 /***/ }),
 
