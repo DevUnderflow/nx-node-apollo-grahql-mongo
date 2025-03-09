@@ -7,8 +7,6 @@
 
   <h3 align="center">Nx-Nodejs-Apollo/GraphQL/Express/MongoDB Boilerplate</h3>
   <p align="center">
-    Try out GraphQL IDE live at <a href="https://node-graphql-mongo.herokuapp.com/graphql">https://node-graphql-mongo.herokuapp.com/graphql</a>  
-    <br />
     This project was generated using <a href="https://nx.dev">Nx</a>.
     <br />
     <br />
